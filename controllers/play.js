@@ -5,9 +5,26 @@ const getAllPlays = async (callback) => {
     return play;
 }
 
+const sortByLikes = async () =>{
+    const plays = await getAllPlays();
+    return plays.filter(x=>x.isPublic === true)
+    .sort((a,b)=>a.usersLiked.length - b.usersLiked);
+}
 
+const sortByDate = async()=>{
+    const plays = await getAllPlays();
+    return plays.filter(x=>x.isPublic === true)
+    .sort((a,b)=> new Date(b.createdAt)-new Date(a.createdAt))
+}
+
+const getPlay = async (id)=>{
+const play = await Play.findById(id).lean();
+return play;
+}
 
 module.exports = {
     getAllPlays,
-    getPlay
+    getPlay,
+    sortByLikes,
+    sortByDate
 }

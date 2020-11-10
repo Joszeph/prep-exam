@@ -7,9 +7,33 @@ const PlaySchema = new mongoose.Schema({
         type: String,
         required: true,
         unique: true
-    }
-    
-    
+    },
+    description:{
+        type:String,
+        required:true,
+        maxlength: 50
+    },
+    imageUrl:{
+        type:String,
+        required: true
+    },
+    isPublic:{
+        type: Boolean,
+        default: false
+    },
+    createdAt:{
+        type:Date,
+        required:true
+    },
+    usersLiked:[{
+        type: ObjectId,
+        ref: 'User'
+    }],
+
+    creator:{
+        type: ObjectId,
+        ref: 'User'
+    }    
 })
 
 module.exports = mongoose.model('Play', PlaySchema);
