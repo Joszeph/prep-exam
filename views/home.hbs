@@ -10,6 +10,8 @@
         tempor aliquip non ea occaecat sunt eiusmod enim nulla anim. Voluptate laborum consequat elit
         quis cupidatat tempor ad laboris duis non eiusmod.</p>
 </section>
+
+
 {{!-- logged user --}}
 {{#if isLoggedIn}}
 <section>
@@ -21,9 +23,9 @@
             <a class="btn create-play" href="/sortLikes">Sort by Likes</a>
         </div>
     </div>
-    
-    <div class="theaters-container">
-        {{#each playsLogged}}
+
+    <div class="theaters-container"> 
+     {{#each playsLogged}}
         <div>
             <div class="home-image">
                 <img src="{{imageUrl}}" alt="{{title}}">
@@ -37,17 +39,23 @@
             </div>
         </div>
         {{else}}
+
          <h4>No plays yet...</h4>
+
         {{/each}}
     </div>
 </section>
+
 {{else}}
+
+
 {{!-- guest user --}}
-{{!-- https://media.timeout.com/images/103727744/380/285/image.jpg --}}
-{{#each playsGuest}}
+
 <section>
     <h1>Best Rated Plays</h1>
     <div class="theaters-container">
+        
+{{#each playsGuest}}        
         <div>
             <div class="home-image">
                 <img src="{{imageUrl}}" alt="{{title}}"
