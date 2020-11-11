@@ -18,9 +18,10 @@ const sortByDate = async()=>{
 }
 
 const getPlay = async (id)=>{
-const play = await Play.findById(id).lean();
-return play;
+    const play = await Play.findById(id).lean();
+    return play;
 }
+
 
 module.exports = {
     getAllPlays,

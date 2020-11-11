@@ -3,9 +3,12 @@ const { validationResult } = require('express-validator');
 const { getUserStatus, checkAuthentication } = require('../controllers/user'); 
 const validation = require('../controllers/validation'); 
 const Play = require('../models/play');
-const {sortByLikes, sortByDate, getPlay}= require('../controllers/play');
+const {sortByLikes, sortByDate, getPlay, removePlay}= require('../controllers/play');
 
 const router = Router();
+
+//checkAuthentication => check if you are guest or admin/creator
+//getUserStatus => get status Logged or Guest
 
 router.get('/', getUserStatus, async (req, res)=>{
 
@@ -85,11 +88,27 @@ router.get('/like/:id', checkAuthentication, async (req, res)=>{
   res.redirect(`/details/${playId}`)
 })
 
+router.get('/delete/:id', async (req, res)=>{
+const playId = req.params.id;
+try{
+ await Play.findByIdAndDelete(playId)
+  res.redirect('/')
+  console.log("Delete successfully")
+}catch(err){
+  console.log("Delete not successfully")
+  res.redirect('/')
+}
+   
+})
+
+
+
 router.get('*', (req, res) => {
     res.render('404', {
       title: 'Error Page'
     })
   })
+
 
 
 

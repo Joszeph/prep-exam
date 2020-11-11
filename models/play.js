@@ -11,7 +11,7 @@ const PlaySchema = new mongoose.Schema({
     description:{
         type:String,
         required:true,
-        maxlength: 50
+        maxlength: 200
     },
     imageUrl:{
         type:String,
