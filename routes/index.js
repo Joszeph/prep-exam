@@ -88,6 +88,17 @@ router.get('/like/:id', checkAuthentication, async (req, res)=>{
   res.redirect(`/details/${playId}`)
 })
 
+router.get('/edit/:id',checkAuthentication, getUserStatus, async (req, res)=>{
+  res.render('edit',{
+  isLoggedIn: req.isLoggedIn
+  })
+})
+
+router.post('/edit/:id', async(req, res)=>{
+
+})
+
+
 router.get('/delete/:id', async (req, res)=>{
   const playId = req.params.id;
   try{
