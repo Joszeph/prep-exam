@@ -89,24 +89,18 @@ router.get('/like/:id', checkAuthentication, async (req, res)=>{
 })
 
 router.get('/delete/:id', async (req, res)=>{
-const playId = req.params.id;
-try{
- await Play.findByIdAndDelete(playId)
-  res.redirect('/')
-  console.log("Delete successfully")
-}catch(err){
-  console.log("Delete not successfully")
-  res.redirect('/')
-}
-   
+  const playId = req.params.id;
+  try{
+    await Play.findByIdAndDelete(playId)
+    res.redirect('/')
+  }catch(err){
+    console.error('Something went wrong with deleted item!')
+    res.redirect('/')
+  }  
 })
 
-
-
-router.get('*', (req, res) => {
-    res.render('404', {
-      title: 'Error Page'
-    })
+router.get('*', async (req, res) => {
+   await res.redirect('../static/404.html')
   })
 
 
