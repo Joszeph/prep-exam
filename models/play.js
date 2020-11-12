@@ -17,10 +17,10 @@ const PlaySchema = new mongoose.Schema({
         type:String,
         required: true
     },
-    isPublic:{
-        type: Boolean,
-        default: false
-    },
+    // isPublic:{
+    //     type: Boolean,
+    //     default: false
+    // },
     createdAt:{
         type:Date,
         required:true

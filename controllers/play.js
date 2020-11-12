@@ -7,14 +7,12 @@ const getAllPlays = async (callback) => {
 
 const sortByLikes = async () =>{
     const plays = await getAllPlays();
-    return plays.filter(x=>x.isPublic === true)
-    .sort((a,b)=>a.usersLiked.length - b.usersLiked);
+    return plays.sort((a,b)=>a.usersLiked.length - b.usersLiked);
 }
 
 const sortByDate = async()=>{
     const plays = await getAllPlays();
-    return plays.filter(x=>x.isPublic === true)
-    .sort((a,b)=> new Date(b.createdAt)-new Date(a.createdAt))
+    return plays.sort((a,b)=> new Date(b.createdAt)-new Date(a.createdAt))
 }
 
 const getPlay = async (id)=>{

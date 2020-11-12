@@ -24,4 +24,6 @@ app.use('/', autRouter);
 
 app.use('/', indexRouter);
 
-app.listen(config.port, console.log(`Listening on port ${config.port}! Now its up to you...`));
+app.listen(config.port,
+console.log(`Listening on port ${config.port}! Now it's up to you...`)
+);

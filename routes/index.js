@@ -7,9 +7,10 @@ const {sortByLikes, sortByDate, getPlay, removePlay}= require('../controllers/pl
 
 const router = Router();
 
-//checkAuthentication => check if you are guest or admin/creator
-//getUserStatus => get status Logged or Guest
+//!checkAuthentication => check if you are guest or admin/creator
+//!getUserStatus => get status Logged or Guest
 
+//route to home
 router.get('/', getUserStatus, async (req, res)=>{
 
   const playsGuest = await sortByLikes();
@@ -23,6 +24,7 @@ router.get('/', getUserStatus, async (req, res)=>{
     })
 })
 
+//route to create form
 router.get('/create', getUserStatus, (req, res)=>{
   res.render('create',{
     title: 'Create new play',
@@ -30,6 +32,7 @@ router.get('/create', getUserStatus, (req, res)=>{
   })
 })
 
+//route to add/create
 router.post('/create',checkAuthentication, validation, async (req, res)=>{
   const errors = validationResult(req);
 
@@ -48,7 +51,7 @@ try{
     title,
     description,
     imageUrl,
-    isPublic: isPublic === 'on' ? true : false,
+   //isPublic: isPublic === 'on' ? true : false,
     createdAt,
     creator: _id
   });
@@ -62,6 +65,7 @@ try{
 }
 })
 
+//route to details
 router.get('/details/:id',checkAuthentication, getUserStatus, async(req, res)=>{
   const id = req.params.id;
   const play = await getPlay(id);
@@ -76,6 +80,7 @@ router.get('/details/:id',checkAuthentication, getUserStatus, async(req, res)=>{
   })
 })
 
+//route to like button
 router.get('/like/:id', checkAuthentication, async (req, res)=>{
   const playId = req.params.id;
   const {_id} = req.user;
@@ -88,17 +93,43 @@ router.get('/like/:id', checkAuthentication, async (req, res)=>{
   res.redirect(`/details/${playId}`)
 })
 
-router.get('/edit/:id',checkAuthentication, getUserStatus, async (req, res)=>{
-  res.render('edit',{
-  isLoggedIn: req.isLoggedIn
-  })
+//route to edit details form
+router.get('/details/edit/:id',checkAuthentication, getUserStatus, async (req, res)=>{
+  const playId = req.params.id;
+  try{
+  const play = await getPlay(playId)
+    res.render('edit',{
+      isLoggedIn: req.isLoggedIn,
+      title:'Edit Page',
+      ...play
+      })
+  }catch(err){
+    console.error(err)
+  }
 })
 
-router.post('/edit/:id', async(req, res)=>{
+//route to submit the details
+router.post('/details/edit/:id',checkAuthentication, validation, async (req, res)=>{
+ const playId = req.params.id;
+try{
+const editPlay = await Play.findByIdAndUpdate(playId,{
+  title: req.body.title,
+  description: req.body.description,
+  imageUrl: req.body.imageUrl,
+ // isPublic: req.body.isPublic
+})
+editPlay.execPopulate((err,_)=>{
+  if(err) throw err;
+  res.redirect('/')
+})
+console.log(editPlay)
+}catch(err){
+console.error(err)
+}
 
 })
 
-
+//route to delete button
 router.get('/delete/:id', async (req, res)=>{
   const playId = req.params.id;
   try{
@@ -110,11 +141,10 @@ router.get('/delete/:id', async (req, res)=>{
   }  
 })
 
+//route to error page
 router.get('*', async (req, res) => {
    await res.redirect('../static/404.html')
   })
-
-
 
 
 module.exports = router;
