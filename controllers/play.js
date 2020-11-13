@@ -12,7 +12,21 @@ const sortByLikes = async () =>{
 
 const sortByDate = async()=>{
     const plays = await getAllPlays();
-    return plays.sort((a,b)=> new Date(b.createdAt) - new Date(a.createdAt))
+
+    let fixDate = new Date();
+    var dd = String(fixDate.getDate()).padStart(2, '0');
+    var mm = String(fixDate.getMonth() + 1).padStart(2, '0'); 
+    var yyyy = fixDate.getFullYear();
+    fixDate = dd + '.' + mm + '.' + yyyy;
+
+    let today = new Date()
+    var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+
+    createdAt = fixDate + ' ' + time
+
+    console.log(createdAt)
+    return plays.sort((a,b)=> b.createdAt - a.createdAt)
+    
 }
 
 const getPlay = async (id)=>{
