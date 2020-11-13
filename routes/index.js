@@ -3,7 +3,7 @@ const { validationResult } = require('express-validator');
 const { getUserStatus, checkAuthentication } = require('../controllers/user'); 
 const validation = require('../controllers/validation'); 
 const Play = require('../models/play');
-const {sortByLikes, sortByDate, getPlay, removePlay}= require('../controllers/play');
+const {sortByLikes, sortByDate, getPlay}= require('../controllers/play');
 
 const router = Router();
 
@@ -140,6 +140,7 @@ router.get('/delete/:id', async (req, res)=>{
     res.redirect('/')
   }  
 })
+
 
 //route to error page
 router.get('*', async (req, res) => {
